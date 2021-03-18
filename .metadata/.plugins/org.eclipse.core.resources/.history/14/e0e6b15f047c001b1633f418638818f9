@@ -1,0 +1,155 @@
+package Assignment;
+
+import java.lang.reflect.Member;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class BoardList {
+	public static void main(String[] args) {
+		List<Student> StudentList = new ArrayList<Student>();
+		String[] name = {"강건우","박상영","이휘로","최윤성","공슬기"};
+			StudentList.add(new Student("5",name[0],
+					(int)(Math.random()*101),
+					(int)(Math.random()*101),
+					(int)(Math.random()*101)
+					));
+			StudentList.add(new Student("9",name[1],
+					(int)(Math.random()*101),
+					(int)(Math.random()*101),
+					(int)(Math.random()*101)
+					));
+			StudentList.add(new Student("2",name[2],
+					(int)(Math.random()*101),
+					(int)(Math.random()*101),
+					(int)(Math.random()*101)
+					));
+			StudentList.add(new Student("1",name[3],
+					(int)(Math.random()*101),
+					(int)(Math.random()*101),
+					(int)(Math.random()*101)
+					));
+			StudentList.add(new Student("7",name[4],
+					(int)(Math.random()*101),
+					(int)(Math.random()*101),
+					(int)(Math.random()*101)
+					));
+		for(Student stu: StudentList) {
+		System.out.println(stu);
+		System.out.println("===========================================");
+		}
+		for(Student stu: StudentList) {
+		Collections.sort(StudentList);
+		}
+		}
+	}
+
+
+
+
+class Student implements Comparable<Student>{
+	private String num;
+	private String name;
+	private int kor;
+	private int math;
+	private int eng;
+	private int sum;
+	private int rank;
+	
+	public Student(String num,String name, int kor, int math, int eng) {
+		super();
+		this.num=num;
+		this.name=name;
+		this.kor=kor;
+		this.math=math;
+		this.eng=eng;
+	}
+	
+	
+	public String getNum() {
+
+		return num;
+	}
+
+
+	public void setNum(String num) {
+		this.num = num;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public int getKor() {
+		return kor;
+	}
+
+
+	public void setKor(int kor) {
+		this.kor = kor;
+	}
+
+
+	public int getMath() {
+		return math;
+	}
+
+
+	public void setMath(int math) {
+		this.math = math;
+	}
+
+
+	public int getEng() {
+		return eng;
+	}
+
+
+	public void setEng(int eng) {
+		this.eng = eng;
+	}
+
+
+	public int getSum() {
+		return sum;
+	}
+
+
+	public void setSum(int sum) {
+		sum = this.kor+this.math+this.eng;
+		this.sum = sum;
+	}
+
+
+	public int getRank() {
+		return rank;
+	}
+
+
+	public void setRank(int sum) {
+		this.rank = rank;
+	}
+	
+	
+
+
+	@Override
+	public String toString() {
+		return "Student [num=" + num + ", name=" + name + ", kor=" + kor + ", math=" + math + ", eng=" + eng + ", sum="
+				+ sum + ", rank=" + rank + "]";
+	}
+
+
+	@Override
+	public int compareTo(Student stu) {
+		
+	  return this.getNum().compareTo(stu.getNum());
+	}
+}

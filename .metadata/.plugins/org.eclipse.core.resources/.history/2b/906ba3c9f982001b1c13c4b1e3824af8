@@ -1,0 +1,96 @@
+package kr.or.ddit.member.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+
+import kr.or.ddit.member.vo.MemberVO;
+import kr.or.ddit.util.JDBCUtil2;
+
+public class MemberDaoImpl implements IMemberDao {
+	
+	private Connection conn;
+	private Statement stmt;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
+	
+	@Override
+	public int insertMember(Connection conn, MemberVO mv) throws SQLException {
+
+		conn = JDBCUtil2.getConnetction();
+		
+		String sql = "insert into mymember (mem_id, mem_name, mem_tel, mem_addr) "
+				    + " values (?, ?, ?, ?)";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, mv.getMemId());
+		pstmt.setString(2, mv.getMemName());
+		pstmt.setString(3, mv.getMemTel());
+		pstmt.setString(4, mv.getMemAddr());
+		
+		int cnt = pstmt.executeUpdate();
+		
+		return cnt;
+	}
+
+	@Override
+	public boolean checkMember(Connection conn, String memId) throws SQLException {
+		
+		boolean chk = false;
+		
+		conn = JDBCUtil2.getConnection();
+		
+		String sql = "select count(*) as cnt from mymember where mem_id = ? ";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, memId);
+		
+		rs = pstmt.executeQuery();
+		
+		int cnt = 0;
+		while(rs.next()) {
+			cnt = rs.getInt("cnt");
+		}
+		
+		if(cnt > 0) {
+			chk = true;
+		}
+		
+		return chk;
+	}
+
+	@Override
+	public List<MemberVO> getAllMemberList(Connection conn) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateMember(Connection conn, MemberVO mv) throws SQLException {
+		
+		conn = JDBCUtil2.getConnection();
+		
+		String sql = "update mymember "
+				   + " set mem_name = ? "
+				   + ", mem_tel = ? "
+				   + ", mem_addr = ? "
+				   + " where mem_id = ? ";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, mv.getMemName());
+		pstmt.setString(2, mv.getMemTel());
+		pstmt.setString(3, mv.getMemAddr());
+		pstmt.setString(4, mv.getMemId());
+		
+		int cnt = pstmt.executeUpdate();
+		
+		return cnt;
+	}
+
+	@Override
+	public int deleteMember(Connection conn, String memId) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

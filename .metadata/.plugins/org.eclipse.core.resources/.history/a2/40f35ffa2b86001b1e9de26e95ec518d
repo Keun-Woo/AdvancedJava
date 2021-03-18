@@ -1,0 +1,139 @@
+package kr.or.ddit.member.dao;
+
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ibatis.sqlmap.client.SqlMapClient;
+
+import kr.or.ddit.member.vo.MemberVO;
+import kr.or.ddit.util.SqlMapClientUtil;
+
+public class MemberDaoImpl implements IMemberDao {
+	
+	private static MemberDaoImpl memDao;
+	
+	private MemberDaoImpl() {
+		smc = SqlMapClientUtil.getInstance();
+	}
+	
+	public static IMemberDao getInstance() {
+		if (memDao == null) {
+			memDao = new MemberDaoImpl();
+					
+		}
+		return memDao;
+	}
+	
+	@Override
+	public int insertMember(SqlMapClient smc, MemberVO mv) throws SQLException {
+		int cnt = 0;
+		
+		Object obj = smc.insert("member.insertMember", mv);
+		if(obj == null) {
+			cnt = 1;
+		}
+		return cnt;
+	}
+
+	@Override
+	public boolean checkMember(SqlMapClient smc, String memId) throws SQLException {
+		
+		boolean chk = false;
+		
+		int cnt = (int) smc.queryForObject("member.getMember",memId);
+		
+		if(cnt > 0) {
+			chk = true;
+		}
+		return chk;
+	}
+
+	@Override
+	public List<MemberVO> getAllMemberList(SqlMapClient smc) throws SQLException {
+		
+		List<MemberVO> memList = smc.queryForList("member.getMemberAll");
+		
+		return memList;
+	}
+
+	@Override
+	public int updateMember(SqlMapClient smc, MemberVO mv) throws SQLException {
+		int cnt;
+		
+		cnt = smc.update("member.updateMember",mv);
+		
+		
+		return cnt;
+	}
+
+	@Override
+	public int deleteMember (SqlMapClient smc, String memId) throws SQLException {
+		int cnt = smc.delete("member.deleteMember",memId);
+		
+		return cnt;
+	}
+
+@Override
+public List<MemberVO> getSearchMember(MemberVO mv, SqlMapClient smc) throws SQLException {
+		
+	List<MemberVO> memList = new ArrayList<>();
+	
+	try {
+		String sql = "select * from mymember where 1=1 ";
+		if(mv.getMemId() !=null && !mv.getMemId().equals("")) {
+			sql += " and mem_id = ? ";
+		}
+		if(mv.getMemName() !=null && !mv.getMemName().equals("")) {
+			sql += " and mem_name = ? ";
+		}
+		if(mv.getMemTel() !=null && !mv.getMemTel().equals("")) {
+			sql += " and mem_tel = ? ";
+		}
+		if(mv.getMemAddr() !=null && !mv.getMemAddr().equals("")) {
+			sql += " and mem_addr like '%'||?||'%' ";
+		}
+		
+		ps = conn.prepareStatement(sql);
+		int index = 1; 
+		if(mv.getMemId() !=null && !mv.getMemId().equals("")) {
+			ps.setString(index++, mv.getMemId());
+		}
+		if(mv.getMemName() !=null && !mv.getMemName().equals("")) {
+			ps.setString(index++, mv.getMemName());
+		}
+		if(mv.getMemTel() !=null && !mv.getMemTel().equals("")) {
+			ps.setString(index++,  mv.getMemTel());		
+		}
+		if(mv.getMemAddr() !=null && !mv.getMemAddr().equals("")) {
+			ps.setString(index++,  mv.getMemAddr());		
+		}
+		
+		rs = ps.executeQuery();
+		
+		while(rs.next()) {
+		MemberVO mv2 = new MemberVO();
+		mv2.setMemId(rs.getString("mem_id"));
+		mv2.setMemName(rs.getString("mem_name"));
+		mv2.setMemTel(rs.getString("mem_tel"));
+		mv2.setMemAddr(rs.getString("mem_addr"));
+			
+		memList.add(mv2);
+		}
+		
+		
+		
+		
+	} finally {
+		JDBCUtil3.disConnect(null, null, ps, rs);
+	}
+		
+	return memList;
+}
+	
+
+}

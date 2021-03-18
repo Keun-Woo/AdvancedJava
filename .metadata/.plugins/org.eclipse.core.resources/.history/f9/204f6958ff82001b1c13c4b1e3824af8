@@ -1,0 +1,48 @@
+package kr.or.ddit.member.service;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import kr.or.ddit.member.vo.MemberVO;
+
+public class MemberServiceImpl implements IMemberService {
+
+	//사용할 DAO의 객체변수를 선언한다.
+	private IMemberDao ss;
+	
+	@Override
+	public int insertMember(MemberVO mv) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean checkMember(String memId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<MemberVO> getAllMemberList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateMember(MemberVO mv) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteMember(String memId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	

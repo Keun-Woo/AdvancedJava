@@ -1,0 +1,7 @@
+package board.service;
+
+import board.vo.BoardVO;
+
+public class BoardService {
+	public int insertBoard(BoardVO bv);
+}

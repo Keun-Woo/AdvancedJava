@@ -1,0 +1,86 @@
+package board.main;
+
+import java.util.Scanner;
+
+/*		위의 테이블을 작성하고 게시판을 관리하는
+다음 기능들을 구현하시오.
+
+기능 구현하기 ==> 전체 목록 출력, 새글작성, 수정, 삭제, 검색 
+ 
+------------------------------------------------------------
+
+게시판 테이블 구조 및 시퀀스
+
+create table jdbc_board(
+    board_no number not null,  -- 번호(자동증가)
+    board_title varchar2(100) not null, -- 제목
+    board_writer varchar2(50) not null, -- 작성자
+    board_date date not null,   -- 작성날짜
+    board_content clob,     -- 내용
+    constraint pk_jdbc_board primary key (board_no)
+);
+create sequence board_seq
+    start with 1   -- 시작번호
+    increment by 1; -- 증가값
+		
+----------------------------------------------------------
+
+ 시퀀스의 다음 값 구하기
+	시퀀스이름.nextVal
+*/
+public class BoardMain {
+	
+	
+	public void displayMenu(){
+		System.out.println();
+		System.out.println("----------------------");
+		System.out.println("  === 작 업 선 택 ===");
+		System.out.println("  1. 전체목록 출력");
+		System.out.println("  2. 새 글 작성");
+		System.out.println("  3. 자료 수정");
+		System.out.println("  4. 자료 삭제");
+		System.out.println("  5. 작업 끝.");
+		System.out.println("----------------------");
+		System.out.print("원하는 작업 선택 >> ");
+	}
+	private Scanner scan = new Scanner(System.in); 
+	
+	public void start(){
+		int input;
+		do{
+			displayMenu(); //메뉴 출력
+			input = scan.nextInt(); // 메뉴번호 입력받기
+			switch(input){
+				case 1 :  // 전체목록 출력
+					displayAll();
+					break;
+				case 2 :  // 새 글 작성
+					insertList();
+					break;
+				case 3 :  // 자료 수정
+					updateList();
+					break;
+				case 4 :  // 자료 삭제
+					deleteList();
+					break;
+				case 5 :  // 작업 끝
+					System.out.println("작업을 마칩니다.");
+					break;
+				default :
+					System.out.println("번호를 잘못 입력했습니다. 다시입력하세요");
+			}
+		}while(input!=6);
+	}	
+	
+	public static void main(String[] args) {
+
+		
+
+
+
+
+
+
+	}
+
+}

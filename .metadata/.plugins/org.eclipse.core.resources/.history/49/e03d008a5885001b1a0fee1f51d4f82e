@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var num;
+		while(num<=100){
+			if(num%2==0&&num%3==0){
+				document.write("ans => " + num);
+				document.write("<br>");
+				num++;
+			}else{
+				num++;
+			}
+		}
+	</script>
+</body>
+</html>

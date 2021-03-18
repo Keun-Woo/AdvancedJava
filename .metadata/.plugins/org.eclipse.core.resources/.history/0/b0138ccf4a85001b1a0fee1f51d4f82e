@@ -1,0 +1,45 @@
+package board.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+
+import board.vo.BoardVO;
+
+public class BoardDaoImpl {
+	private Statement stmt;
+	private PreparedStatement ps;
+	private ResultSet rs;
+	
+	
+	public int insertList(Connection conn, BoardVO bv)throws SQLException {
+		String sql = "insert into jdbc_board (board_no, board_title, "
+					+ "board_writer, board_date, board_content)"
+					+ "values (board_seq.nextVal, ? , ? , ? , ?)";
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, bv.getBoard_title());
+		ps.setString(2, bv.getBoard_writer());
+		ps.setString(3, bv.getBoard_date());
+		ps.setString(4, bv.getBoard_content());
+		
+		int cnt = ps.executeUpdate();
+		return cnt;
+	}
+
+public int updateList(Connection conn, BoardVO bv)throws SQLException {
+	return 0;
+}
+
+public int deleteList(Connection conn, BoardVO bv)throws SQLException {
+	return 0;
+}
+public boolean checkList(Connection conn, int board_no)throws SQLException {
+	return false;
+}
+public List<BoardVO> getAllBoardList(Connection conn)throws SQLException {
+	return null;
+}
+}

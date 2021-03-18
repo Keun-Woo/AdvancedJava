@@ -1,0 +1,62 @@
+package kr.or.ddit.member.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+
+
+import kr.or.ddit.member.vo.MemberVO;
+import kr.or.ddit.util.JDBCUtil3;
+
+public class MemberDaoImpl implements IMemberDao{
+	
+	private Connection conn;
+	private Statement stmt;
+	private PreparedStatement ps;
+	private ResultSet rs;
+	
+	@Override
+	public int insertMember(Connection conn, MemberVO mv) throws SQLException {
+		conn = JDBCUtil3.getConnetction();
+		String sql = "insert into mymember(mem_id, mem_name, mem_tel, mem_addr)"
+				+ " values (?,?,?,?)";
+		
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, mv.getMemId());
+		ps.setString(2, mv.getMemName());
+		ps.setString(3, mv.getMemTel());
+		ps.setString(4, mv.getMemAddr());
+		
+		int cnt = ps.executeUpdate();
+				
+		return cnt;
+	}
+
+	@Override
+	public boolean checkMember(Connection conn, String memId) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<MemberVO> getAllMeberList(Connection conn) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateMember(Connection conn, MemberVO mv) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteMember(Connection conn, MemberVO mv) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}
